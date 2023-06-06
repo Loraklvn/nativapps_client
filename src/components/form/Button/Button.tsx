@@ -28,7 +28,7 @@ const variantStyles: VariantType = {
       'bg-slate-900 text-white hover:bg-slate-700 hover:text-slate-100 active:bg-slate-800 active:text-slate-300 focus-visible:outline-slate-900',
     blue: 'bg-blue-600 text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600',
     primary:
-      'bg-green-600 text-white hover:text-slate-100 hover:bg-green-700 active:bg-green-800 active:text-green-100 focus-visible:outline-green-600',
+      'bg-orange-500 text-white hover:text-slate-100 hover:bg-orange-600 active:bg-orange-800 active:text-orange-100 focus-visible:outline-orange-600',
     yellow:
       'bg-yellow-400 text-black hover:text-gray-700 hover:bg-yellow-500 active:bg-yellow-800 active:text-yellow-100 focus-visible:outline-yellow-600',
     white:
@@ -40,7 +40,7 @@ const variantStyles: VariantType = {
     slate:
       'ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300',
     primary:
-      'ring-green-200 text-green-700 hover:text-green-900 hover:ring-green-300 active:bg-green-100 active:text-green-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300',
+      'ring-orange-200 text-orange-700 hover:text-orange-900 hover:ring-orange-300 active:bg-orange-100 active:text-orange-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300',
     white:
       'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50',
     blue: 'ring-blue-700 text-white hover:ring-blue-500 active:ring-blue-700 active:text-blue-400 focus-visible:outline-white',

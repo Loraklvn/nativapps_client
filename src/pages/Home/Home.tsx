@@ -3,11 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { FlightsUrlParams, getFlights } from '../../adapters/flights';
 import { bookReservation } from '../../adapters/reservation';
 import Container from '../../components/common/Container';
+import Modal from '../../components/common/Modal';
 import Pagination from '../../components/common/Pagination';
 import FlightCard from '../../components/home/FlightCard';
 import ProductCardSkeleton from '../../components/home/FlightCardSkeleton';
 import FlightsForms from '../../components/home/FlightsForm';
 import { FlightData } from '../../types/flight';
+import { ReservationDetails } from '../../types/reservation';
+
+import { getModalReservationContent } from './utils';
 
 const defaultState = {
   total: 0,
@@ -19,8 +23,12 @@ const defaultState = {
 
 const Home = (): React.ReactElement => {
   const [flightData, setFlightData] = useState<FlightData>(defaultState);
-  const [isLoading, setIsLoading] = useState(true);
   const [urlParams, setUrlParams] = useState<FlightsUrlParams>({});
+  const [bookedRservation, setBookedReservation] = useState<
+    ReservationDetails | undefined
+  >();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const flights = flightData?.flights || [];
 
@@ -49,9 +57,11 @@ const Home = (): React.ReactElement => {
 
   const handleBookFlight = async (flightId: number): Promise<void> => {
     try {
-      await bookReservation(flightId);
-      // eslint-disable-next-line no-console
-      console.log('success');
+      const {
+        data: { data },
+      } = await bookReservation(flightId);
+      setBookedReservation(data);
+      setIsModalOpen(true);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log({ error });
@@ -65,9 +75,20 @@ const Home = (): React.ReactElement => {
 
   const placeholderProducts = Array.from(Array(4).keys());
 
+  const handleOnClose = (): void => {
+    setIsModalOpen(false);
+    setBookedReservation(undefined);
+  };
+
   return (
     <Container>
       <div className="mx-auto pt-14">
+        <Modal
+          show={isModalOpen}
+          onClose={handleOnClose}
+          title="Flight booked successfully"
+          content={getModalReservationContent(bookedRservation)}
+        />
         <FlightsForms
           onSubmit={handleGetFlights}
           setUrlParams={setUrlParams}
