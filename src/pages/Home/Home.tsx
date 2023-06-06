@@ -20,16 +20,16 @@ const Home = (): React.ReactElement => {
   const [flightData, setFlightData] = useState<FlightData>(defaultState);
   const [isLoading, setIsLoading] = useState(true);
   const [urlParams, setUrlParams] = useState<FlightsUrlParams>({});
+  const [activePage, setActivePage] = useState(1);
   const flights = flightData?.flights || [];
 
-  const handleGetFlights = async (
-    params: FlightsUrlParams = {}
-  ): Promise<void> => {
+  const handleGetFlights = async (page = 1): Promise<void> => {
+    setIsLoading(true);
+    setActivePage(page);
     try {
-      setIsLoading(true);
       const {
         data: { data },
-      } = await getFlights({ ...urlParams, ...params });
+      } = await getFlights({ ...urlParams, page });
 
       // eslint-disable-next-line no-console
       console.log(data);
@@ -47,8 +47,7 @@ const Home = (): React.ReactElement => {
   }, []);
 
   const handlePagination = ({ page }: { page: number }): void => {
-    setUrlParams((prev) => ({ ...prev, page }));
-    handleGetFlights({ page });
+    handleGetFlights(page);
     window.scroll({ behavior: 'smooth', top: 0 });
   };
 
@@ -72,7 +71,7 @@ const Home = (): React.ReactElement => {
       <div className="mt-10 text-center">
         {flightData.flights.length ? (
           <Pagination
-            defaultPage={1}
+            defaultPage={activePage}
             itemsPerPage={flightData.pageSize}
             totalItems={flightData.total}
             loading={isLoading}
