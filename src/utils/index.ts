@@ -19,3 +19,11 @@ export const formatToMoney = (
 export const firstLetterToUpperCase = (str: string): string => {
   return str[0].toUpperCase() + str.slice(1).toLocaleLowerCase();
 };
+
+export const getDateTimeHHMM = (date: string): string => {
+  const time = new Date(date).toLocaleString().split(' ');
+  const upTo = time[1].lastIndexOf(':') + 1;
+  const HHMM = time[1].slice(0, upTo);
+
+  return `${HHMM}${time[2]}`;
+};
