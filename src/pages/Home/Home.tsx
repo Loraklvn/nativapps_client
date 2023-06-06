@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { FlightsUrlParams, getFlights } from '../../adapters/flights';
+import { bookReservation } from '../../adapters/reservation';
 import Container from '../../components/common/Container';
 import Pagination from '../../components/common/Pagination';
 import FlightCard from '../../components/home/FlightCard';
@@ -46,6 +47,17 @@ const Home = (): React.ReactElement => {
     handleGetFlights();
   }, []);
 
+  const handleBookFlight = async (flightId: number): Promise<void> => {
+    try {
+      await bookReservation(flightId);
+      // eslint-disable-next-line no-console
+      console.log('success');
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log({ error });
+    }
+  };
+
   const handlePagination = ({ page }: { page: number }): void => {
     handleGetFlights(page);
     window.scroll({ behavior: 'smooth', top: 0 });
@@ -65,7 +77,13 @@ const Home = (): React.ReactElement => {
       </div>
       <div className="mt-10 flex flex-col gap-10 max-w-2xl mx-auto">
         {!isLoading
-          ? flights.map((flight) => <FlightCard key={flight.id} {...flight} />)
+          ? flights.map((flight) => (
+              <FlightCard
+                key={flight.id}
+                onBook={(): Promise<void> => handleBookFlight(flight.id)}
+                {...flight}
+              />
+            ))
           : placeholderProducts.map((key) => <ProductCardSkeleton key={key} />)}
       </div>
       <div className="mt-10 text-center">

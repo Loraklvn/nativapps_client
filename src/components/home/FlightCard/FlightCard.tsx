@@ -3,7 +3,7 @@ import airplanePhoto from '../../../assets/airplane.png';
 import { Flight } from '../../../types/flight';
 import { getDateTimeHHMM } from '../../../utils';
 
-type FlightCardProps = Flight;
+type FlightCardProps = Flight & { onBook: () => void };
 
 export default function FlightCard({
   origin,
@@ -11,6 +11,7 @@ export default function FlightCard({
   price,
   departure_time: departureTime,
   arrival_time: arrivalTime,
+  onBook,
 }: FlightCardProps): React.ReactElement {
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200">
@@ -32,7 +33,7 @@ export default function FlightCard({
         </div>
         <div className="flex flex-col gap-2">
           <h3 className="text-2xl font-bold">${price}</h3>
-          <Button variant="outline" color="white">
+          <Button onClick={onBook} variant="outline" color="white">
             Book
           </Button>
         </div>
