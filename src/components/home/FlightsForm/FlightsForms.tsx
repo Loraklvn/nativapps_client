@@ -1,6 +1,7 @@
 import { LocationMarkerIcon } from '@heroicons/react/solid';
 import React, { useState } from 'react';
 
+import { FlightsUrlParams } from '../../../adapters/flights';
 import ErrorAlert from '../../../components/common/ErrorAlert/ErrorAlert';
 import Button from '../../../components/form/Button';
 import InputText from '../../../components/form/InputText';
@@ -10,26 +11,35 @@ const locationInputs = [
   { name: 'destination', placeholder: 'Going to' },
 ];
 
-const defaultFormState = { origin: '', destination: '' };
+type FlightsFormsProps = {
+  onSubmit: () => void;
+  setUrlParams: (params: FlightsUrlParams) => void;
+  urlParams: FlightsUrlParams;
+  isLoading: boolean;
+};
 
-const FlightsForms = (): React.ReactElement => {
-  const [formState, setFormState] = useState(defaultFormState);
+const FlightsForms = ({
+  onSubmit,
+  setUrlParams,
+  urlParams,
+  isLoading,
+}: FlightsFormsProps): React.ReactElement => {
   const [shouldErrorDisplay, setShouldErrorDisplay] = useState(false);
 
   const onChangeHandler = (field: string, value: string): void => {
-    setFormState({
-      ...formState,
+    setUrlParams({
+      ...urlParams,
       [field]: value,
     });
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    if (!formState.origin.trim() && !formState.destination.trim()) {
+    if (!urlParams?.origin?.trim() && !urlParams?.destination?.trim()) {
       setShouldErrorDisplay(true);
     } else {
       setShouldErrorDisplay(false);
-      // submit action
+      onSubmit();
     }
   };
   return (
@@ -64,7 +74,7 @@ const FlightsForms = (): React.ReactElement => {
         </div>
 
         <div className="text-center mt-6">
-          <Button btnSize="lg" className="px-16">
+          <Button btnSize="lg" className="px-16" disabled={isLoading}>
             Search
           </Button>
         </div>

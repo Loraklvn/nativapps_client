@@ -7,13 +7,15 @@ export type Flight = {
   destination: string;
 };
 
+export type FlightData = {
+  total: number;
+  pageSize: number;
+  currentPage: number;
+  totalPages: number;
+  flights: Flight[];
+};
+
 export type FlightResponse = {
   status: string;
-  data: {
-    total: number;
-    pageSize: number;
-    currentPage: number;
-    totalPages: number;
-    flights: Flight[];
-  };
+  data: FlightData;
 };
