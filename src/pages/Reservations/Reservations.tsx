@@ -44,7 +44,7 @@ const Reservations = (): React.ReactElement => {
                       {getDateTimeHHMM(flight.arrival_time)}
                     </h3>
                     <span className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                      Miami - Denver
+                      {flight.origin} - {flight.destination}
                     </span>
                   </div>
                   <p className="mt-1 font-medium  text-sm text-gray-700">
@@ -61,7 +61,7 @@ const Reservations = (): React.ReactElement => {
                         className="h-5 w-5 text-gray-400"
                         aria-hidden="true"
                       />
-                      Miami
+                      {flight.origin}
                     </a>
                   </div>
                   <div className="-ml-px flex w-0 flex-1">
@@ -70,7 +70,7 @@ const Reservations = (): React.ReactElement => {
                         className="h-5 w-5 text-gray-400"
                         aria-hidden="true"
                       />
-                      Denver
+                      {flight.destination}
                     </a>
                   </div>
                 </div>
