@@ -39,7 +39,7 @@ export function putRequest<T>(
 
 export function getRequest<T>(
   url: string,
-  customConfig: AxiosRequestConfig
+  customConfig: AxiosRequestConfig = {}
 ): Promise<AxiosResponse<T>> {
   const config = getResponseParams();
 

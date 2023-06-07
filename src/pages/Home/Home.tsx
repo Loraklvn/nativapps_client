@@ -27,7 +27,8 @@ const Home = (): React.ReactElement => {
   const [bookedRservation, setBookedReservation] = useState<
     ReservationDetails | undefined
   >();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isBooking, setIsBooking] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const flights = flightData?.flights || [];
@@ -57,6 +58,7 @@ const Home = (): React.ReactElement => {
 
   const handleBookFlight = async (flightId: number): Promise<void> => {
     try {
+      setIsBooking(true);
       const {
         data: { data },
       } = await bookReservation(flightId);
@@ -65,6 +67,8 @@ const Home = (): React.ReactElement => {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log({ error });
+    } finally {
+      setIsBooking(false);
     }
   };
 
@@ -101,6 +105,7 @@ const Home = (): React.ReactElement => {
           ? flights.map((flight) => (
               <FlightCard
                 key={flight.id}
+                isLoading={isBooking}
                 onBook={(): Promise<void> => handleBookFlight(flight.id)}
                 {...flight}
               />
